@@ -3,12 +3,12 @@ package com.example.alfatesttask.utils
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-fun String.toCardFormat(): String{
+fun String.toCardFormat(): String {
     return this.chunked(4).joinToString(" ")
 }
 
 
-fun String.toInputString(): String{
+fun String.toInputString(): String {
     return this.replace(" ", "")
 }
 
@@ -36,6 +36,7 @@ fun calculateNewCursorPosition(
 
     return newCursorPos
 }
+
 fun LocalDateTime.formatToString(): String {
     val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")
     return this.format(formatter)

@@ -32,16 +32,24 @@ class MainActivity : ComponentActivity() {
                     Box(
                         modifier = Modifier.Companion
                             .fillMaxSize()
-                            .padding(innerPadding).clickable(
+                            .padding(innerPadding)
+                            .clickable(
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null,
                                 onClick = { focusManager.clearFocus() }
                             )
                     ) {
-                        NavHost(navController = navController,
-                            startDestination = "card_input_screen"){
-                            composable("card_input_screen"){CardInputView(navController, focusManager)}
-                            composable("history_screen") {CardHistoryView(navController)}
+                        NavHost(
+                            navController = navController,
+                            startDestination = "card_input_screen"
+                        ) {
+                            composable("card_input_screen") {
+                                CardInputView(
+                                    navController,
+                                    focusManager
+                                )
+                            }
+                            composable("history_screen") { CardHistoryView() }
                         }
 
                     }

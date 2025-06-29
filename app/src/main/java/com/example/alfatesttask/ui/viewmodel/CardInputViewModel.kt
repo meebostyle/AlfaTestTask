@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class CardInputViewModel: ViewModel() {
+class CardInputViewModel : ViewModel() {
 
     private var _content = MutableStateFlow<BinInfoModel>(BinInfoModel())
     val content = _content.asStateFlow()
@@ -20,43 +20,43 @@ class CardInputViewModel: ViewModel() {
     private val _isLoading = mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
 
-    private val _isError = mutableStateOf(false)
-    val isError: State<Boolean> = _isError
-
     private var _incorrectInput = mutableStateOf(false)
     val incorrectInput: State<Boolean> = _incorrectInput
 
     private var _textFieldValue = mutableStateOf(TextFieldValue(""))
     val textFieldValue: State<TextFieldValue> = _textFieldValue
 
-    fun setTextFieldValue (n: TextFieldValue){
+    fun setTextFieldValue(n: TextFieldValue) {
         _textFieldValue.value = n
     }
 
-    fun getContent(number: String){
-        _isLoading.value = true
-        _isError.value = false
-        if (number.length in (6..8)){
-        viewModelScope.launch {
-            loadContent(number)
-        }
+    fun getContent(number: String) {
+        _content.value = BinInfoModel()
+        if (number.length in (6..8)) {
+            _isLoading.value = true
+            viewModelScope.launch {
+                loadContent(number)
+            }
         } else
             _incorrectInput.value = true
 
+    }
+
+    fun clearIncorrectInput() {
+        _incorrectInput.value = false
     }
 
     private suspend fun loadContent(number: String) {
         val repository = BinRepository()
         try {
             val response = repository.getBinInfo(number)
-            _content.value = response
-        } catch (e: Exception){
+            if (response.bank != "-")
+                _content.value = response
+            else
+                _incorrectInput.value = true
+        } catch (e: Exception) {
             Log.e("Response log", "Error: $e")
-            _isError.value = true
         }
         _isLoading.value = false
-
-
-
     }
 }

@@ -23,9 +23,9 @@ class BinRepository {
         return result
     }
 
-    suspend fun getHistory():List<BinInfoModel>{
+    suspend fun getHistory(): List<BinInfoModel> {
         val database = HistoryDatabase.db
-        return database.historyDao().getAll().map{ it.toBinInfoModel() }
+        return database.historyDao().getAll().map { it.toBinInfoModel() }
     }
 
     private suspend fun saveSearch(binInfo: BinInfoModel) {

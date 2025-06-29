@@ -6,8 +6,8 @@ import retrofit2.http.Path
 
 interface BinService {
     @GET("{number}")
-    suspend fun getBinInfo (
-    @Path("number") number: String
+    suspend fun getBinInfo(
+        @Path("number") number: String
     ): BinResponse
 
 }

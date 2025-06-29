@@ -18,9 +18,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.style.LineHeightStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -31,12 +28,11 @@ import com.example.alfatesttask.ui.viewmodel.CardInputViewModel
 import com.example.alfatesttask.utils.toInputString
 
 @Composable
-@Preview(showBackground = true)
 fun CardInputView(navController: NavController, focusManager: FocusManager) {
     val viewModel: CardInputViewModel = viewModel()
     val binInfoModel by viewModel.content.collectAsStateWithLifecycle()
 
-    if (!viewModel.isLoading.value){
+    if (!viewModel.isLoading.value) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -66,15 +62,23 @@ fun CardInputView(navController: NavController, focusManager: FocusManager) {
                 }
             }
         }
-        Box(Modifier.fillMaxSize(),contentAlignment = Alignment.BottomCenter) {
+        Box(
+            Modifier
+                .fillMaxSize()
+                .padding(bottom = 8.dp),
+            contentAlignment = Alignment.BottomCenter
+        ) {
             Button(onClick = {
                 navController.navigate("history_screen")
             }) {
                 Text("Response history")
             }
         }
-    } else{
-        CircularProgressIndicator()
+    } else {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+        }
+
     }
 
 }
